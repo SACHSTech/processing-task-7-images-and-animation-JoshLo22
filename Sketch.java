@@ -1,36 +1,53 @@
 import processing.core.PApplet;
+import processing.core.PImage;
 
 public class Sketch extends PApplet {
-	
-	
-  /**
-   * Called once at the beginning of execution, put your size all in this method
-   */
+  PImage imgdiamond;
+  PImage imgBaseball;
+
+  // x and y coordinate for basketball
+  float fltBaseBallX = 0;
+  float fltBaseBallY = 0;
+  float fltAngle = 0.05f;
+  float fltShapeX = 80;
+  float fltShapeY = 10;
+
+  // basketball speed variables
+  float fltXSpeed = 3;
+  float fltYSpeed = 3;
+
   public void settings() {
-	// put your size call here
     size(400, 400);
   }
 
-  /** 
-   * Called once at the beginning of execution.  Add initial set up
-   * values here i.e background, stroke, fill etc.
-   */
   public void setup() {
-    background(210, 255, 173);
+    imgdiamond = loadImage("diamond.jpg");
+    imgdiamond.resize(width, height);
+    imgBaseball = loadImage("Baseball.png");
+    imgBaseball.resize(imgBaseball.width / 50, imgBaseball.height / 50);
+
   }
 
-  /**
-   * Called repeatedly, anything drawn to the screen goes here
-   */
   public void draw() {
-	  
-	// sample code, delete this stuff
-    stroke(128);
-    line(150, 25, 270, 350);  
+    background(imgdiamond);
+    image(imgBaseball, fltBaseBallX, fltBaseBallY);
 
-    stroke(255);
-    line(50, 125, 70, 50);  
+    fltBaseBallX = cos(fltAngle) * 50 + 189;
+    fltBaseBallY = sin(fltAngle) * 50 + 111;
+
+    fltAngle -= 0.05f;
+    fltShapeX += fltXSpeed;
+    fltShapeY += fltYSpeed;
+    ellipse(fltShapeX, fltShapeY, 30, 30);
+    if (fltShapeX > width - 15 || fltShapeX < 0) {
+      fltXSpeed *= -1;
+
+    }
+
+    if (fltShapeY > height - 15 || fltShapeY < 0) {
+      fltYSpeed *= -1;
+    }
+
   }
-  
-  // define other methods down here.
+
 }
